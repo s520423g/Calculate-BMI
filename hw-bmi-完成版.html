@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            border: 1px dotted #b87070;
+            /* width: 80%; */
+            padding: 20px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ad5a5a;
+            box-shadow: 0 0 10px #e5c0c0;
+            border-radius: 5px;
+        }
+
+        h1 {
+            color: #600000;
+        }
+
+        h1,
+        h3 {
+            margin: 0px 0px 24px;
+        }
+
+        .type-area {
+            font-weight: bold;
+            margin: 0px 0px 22px;
+            /* display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; */
+        }
+
+        .type-area span {
+            margin-right: 8px;
+        }
+
+        .gender-box {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        input {
+            border: 1px dashed #b87070;
+            border-radius: 3px;
+            margin-bottom: 8px;
+        }
+
+        select,
+        button {
+            background-color: #ebd6d6;
+            border: 1px solid #b87070;
+            color: #6b1b1b;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            margin-left: 4px;
+            margin-right: 4px;
+        }
+
+        .delete {
+            background-color: #ebd6d6;
+            border: 1px solid #b87070;
+            color: #6b1b1b;
+        }
+
+        .result-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .result {
+            width: 60%;
+            height: 20px;
+            background-color: #F2E6E6;
+            border: 1px dashed #b87070;
+            border-radius: 3px;
+            margin: 0px 0px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #6b1b1b;
+        }
+
+        .grade {
+            /* background-color: #ebd6d6;
+            width: 300px; */
+            height: 40px;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        table {
+            width: 80%;
+            /* border-collapse: collapse; */
+            font-size: 13px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px dashed #b87070;
+            border-radius: 3px;
+        }
+
+        td,
+        th {
+            text-align: center;
+            padding: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <h1>BMI 計算機</h1>
+            <h3>身體質量數值 (Body Mass Index,簡稱BMI) 是公認用來估計肥胖程度的方法</h3>
+            <h3>BMI = 體重(公斤) / 身高的平方(公尺)</h3>
+            <div class="type-area">
+                <div class="gender-box">
+                    <div>
+                        性別:
+                        <input type="radio" name="gender" value="男">男
+                        <input type="radio" name="gender" value="女">女
+                    </div>
+                </div>
+                <span>我的身高: <input type="number" class="height" min="1"> 公分</span>
+                <span>我的體重: <input type="number" class="weight" min="1"> 公斤</span>
+                <button type="button" class="calc">計算</button>
+                <button class="delete">清除</button>
+                <div class="result-area">
+                    <div class="result"></div>
+                    <div class="grade"></div>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="3">BMI值</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th></th>
+                        <th>Male</th>
+                        <th>Female</th>
+                    </tr>
+                    <tr>
+                        <th class="kind-col">體重過輕</th>
+                        <th class="male-col">&lt 20</th>
+                        <th class="fem-col">&lt 19</th>
+                    </tr>
+                    <tr>
+                        <th class="kind-col">正常範圍</th>
+                        <th class="male-col">20-25</th>
+                        <th class="fem-col">19-25</th>
+                    </tr>
+                    <tr>
+                        <th class="kind-col">體重過重</th>
+                        <th class="male-col">25-30</th>
+                        <th class="fem-col">25-30</th>
+                    </tr>
+                    <tr>
+                        <th class="kind-col">肥胖</th>
+                        <th class="male-col">30-40</th>
+                        <th class="fem-col">30-40</th>
+                    </tr>
+                    <tr>
+                        <th class="kind-col">病態肥胖</th>
+                        <th class="male-col">&gt 40</th>
+                        <th class="fem-col">&gt 40</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let kindAll = document.querySelectorAll('.kind-col');
+        let maleAll = document.querySelectorAll('.male-col');
+        let femaleAll = document.querySelectorAll('.fem-col');
+
+        let answerGender;
+        let answerRow;
+        let prevAnswerRow = answerRow;
+
+        let gender;
+        let height = document.querySelector('.height');
+        let weight = document.querySelector('.weight');
+        let calcBtn = document.querySelector('.calc');
+        let deleteBtn = document.querySelector('.delete');
+        let result = document.querySelector('.result');
+        let grade = document.querySelector('.grade');
+        let played = false;
+
+        calcBtn.addEventListener('click', function () {
+            gender = document.querySelector('input[name="gender"]:checked');
+            if (!height.value || !weight.value || !gender) {
+                alert('請確實填寫');
+                return;
+            }
+            bmiCalc();
+            genderAns();
+            prevAnswerRow = answerRow;
+            played = true;
+            return prevAnswerRow;
+        })
+
+
+        function bmiCalc() {
+            let resultNumber = weight.value * 1 / (((height.value * 1) / 100) * ((height.value * 1) / 100));
+            let gradeText = '';
+            if (resultNumber < 20) {
+                gradeText = '太瘦嚕,吃胖點';
+                answerRow = 0;
+            } else if (resultNumber <= 25) {
+                gradeText = '剛剛好,太完美嚕';
+                answerRow = 1;
+            } else if (resultNumber <= 30) {
+                gradeText = '稍微有肉肉了一點,記得運動唷';
+                answerRow = 2;
+            } else if (resultNumber <= 40) {
+                gradeText = '有點不健康捏,建議去運動運動';
+                answerRow = 3;
+            } else {
+                gradeText = '豐腴了億點點,趕快去運動吧!';
+                answerRow = 4;
+            }
+            result.textContent = resultNumber.toFixed(2);
+            grade.textContent = gradeText;
+        }
+
+        function genderAns() {
+            if (played) {
+                femaleAll[prevAnswerRow].style.color = '#ad5a5a';
+                maleAll[prevAnswerRow].style.color = '#ad5a5a';
+                femaleAll[prevAnswerRow].style.fontSize = '13px';
+                maleAll[prevAnswerRow].style.fontSize = '13px';
+            }
+            if (gender.value === '女') {
+                femaleAll[answerRow].style.color = '#D94600';
+                femaleAll[answerRow].style.fontSize = '17px';
+                prevAnswerRow = answerRow;
+
+            } else {
+                maleAll[answerRow].style.color = '#8080C0';
+                maleAll[answerRow].style.fontSize = '17px';
+                prevAnswerRow = answerRow;
+            }
+        }
+
+        deleteBtn.addEventListener('click', function () {
+            resetAll();
+        });
+
+        function resetAll() {
+            gender = document.querySelector('input[name="gender"]:checked');
+            gender.checked = '';
+            height.value = '';
+            weight.value = '';
+            result.textContent = '';
+            grade.textContent = '';
+            femaleAll[prevAnswerRow].style.color = '#ad5a5a';
+            maleAll[prevAnswerRow].style.color = '#ad5a5a';
+            femaleAll[prevAnswerRow].style.fontSize = '13px';
+            maleAll[prevAnswerRow].style.fontSize = '13px';
+        }
+
+    </script>
+</body>
+
+</html>
